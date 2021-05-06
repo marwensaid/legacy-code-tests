@@ -9,13 +9,12 @@ import org.craftedsw.tripservicekata.user.UserSession;
 
 public class TripService {
 
-	public List<Trip> getTripsByUser(User user) throws UserNotLoggedInException {
+	public List<Trip>  logged(User user,User l) {
 		List<Trip> tripList = new ArrayList<Trip>();
-		User loggedUser = UserSession.getInstance().getLoggedUser();
 		boolean isFriend = false;
-		if (loggedUser != null) {
+		if (l != null) {
 			for (User friend : user.getFriends()) {
-				if (friend.equals(loggedUser)) {
+				if (friend.equals(l)) {
 					isFriend = true;
 					break;
 				}
@@ -27,6 +26,12 @@ public class TripService {
 		} else {
 			throw new UserNotLoggedInException();
 		}
+	}
+	public List<Trip> getTripsByUser(User user) throws UserNotLoggedInException {
+		
+		User loggedUser = UserSession.getInstance().getLoggedUser();
+		return logged(user,loggedUser);
+		
 	}
 	
 }
