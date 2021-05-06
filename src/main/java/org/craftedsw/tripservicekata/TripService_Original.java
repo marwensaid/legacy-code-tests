@@ -3,7 +3,7 @@ package org.craftedsw.tripservicekata;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.craftedsw.tripservicekata.user.UserNotLoggedInException;
+import org.craftedsw.tripservicekata.exception.UserNotLoggedInException;
 import org.craftedsw.tripservicekata.trip.Trip;
 import org.craftedsw.tripservicekata.trip.TripDAO;
 import org.craftedsw.tripservicekata.user.User;
