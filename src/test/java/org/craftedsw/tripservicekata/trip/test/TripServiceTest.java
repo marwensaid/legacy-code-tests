@@ -1,24 +1,25 @@
 package org.craftedsw.tripservicekata.trip.test;
 
-import static org.craftedsw.tripservicekata.user.test.UserBuilder.aUser;
-import static org.hamcrest.Matchers.is;
-import static org.junit.Assert.assertThat;
-import static org.mockito.BDDMockito.given;
-
-import java.util.List;
-
 import org.craftedsw.tripservicekata.exception.UserNotLoggedInException;
 import org.craftedsw.tripservicekata.trip.Trip;
 import org.craftedsw.tripservicekata.trip.TripDAO;
 import org.craftedsw.tripservicekata.trip.TripService;
 import org.craftedsw.tripservicekata.user.User;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.runners.MockitoJUnitRunner;
+import org.mockito.junit.jupiter.MockitoExtension;
 
-@RunWith(MockitoJUnitRunner.class)
+import java.util.List;
+
+import static org.craftedsw.tripservicekata.user.test.UserBuilder.aUser;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.is;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.BDDMockito.given;
+
+@ExtendWith(MockitoExtension.class)
 public class TripServiceTest {
 	
 	private static final User UNUSED_USER = null;
@@ -34,9 +35,12 @@ public class TripServiceTest {
 	@InjectMocks 
 	private TripService realTripService = new TripService();
 	
-	@Test(expected = UserNotLoggedInException.class) public void 
-	should_throw_an_exception_when_user_is_not_logged_in() {
-		 realTripService.getTripsByUser(UNUSED_USER, GUEST);
+	@Test
+	public void should_throw_an_exception_when_user_is_not_logged_in() {
+
+		 assertThrows(UserNotLoggedInException.class, () -> {
+			 realTripService.getTripsByUser(UNUSED_USER, GUEST);
+		 });
 	}
 	
 	@Test public void 
