@@ -10,11 +10,13 @@ import org.craftedsw.tripservicekata.user.UserSession;
 import org.craftedsw.tripservicekata.user.UserSession.UserSessionService;
 
 public class TripService {
+	private TripDAO tripDAO;
 	
 	private final UserSessionService userSessionService;
-
-	public TripService(UserSessionService userSessionService) {
+	
+	public TripService(UserSessionService userSessionService, TripDAO tripDAO) {
 		this.userSessionService = userSessionService;
+		this.tripDAO = tripDAO;
 	}
 	
 	
@@ -27,7 +29,7 @@ public class TripService {
     	List<Trip> tripList = new ArrayList<>();
 		User loggedUser = userSessionService.getLoggedUser();
 		if (isFriend(friend, loggedUser)) {
-			tripList = TripDAO.findTripsByUser(friend);
+			tripList = this.tripDAO.tripsByUser(friend);
 		}
 		return tripList;
     }

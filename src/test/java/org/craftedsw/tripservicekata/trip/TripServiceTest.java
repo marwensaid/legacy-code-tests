@@ -15,15 +15,21 @@ import org.craftedsw.tripservicekata.user.UserSession;
 import org.craftedsw.tripservicekata.user.UserSession.UserSessionService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mock;
+import static org.mockito.BDDMockito.given;
 
 public class TripServiceTest {
 	private UserSessionService sessionService;
 	private TripService tripService;
 
+	@Mock 
+	private TripDAO tripDAO;
+	
 	@BeforeEach
 	public void setUp() {
 		sessionService = mock(UserSessionService.class);
-		tripService = new TripService(sessionService);
+		tripDAO = mock(TripDAO.class);
+		tripService = new TripService(sessionService, tripDAO);
 	}
 
 	@Test
@@ -62,7 +68,8 @@ public class TripServiceTest {
 		friend.addTrip(new Trip());
 		user.addFriend(friend);
 		
-		when(sessionService.getLoggedUser()).thenReturn(friend);
+		given(sessionService.getLoggedUser()).willReturn(friend);
+		given(tripDAO.tripsByUser(user)).willReturn(friend.trips());
 		
 		// act
 		List<Trip> trips = tripService.getTripsByUser(user);
