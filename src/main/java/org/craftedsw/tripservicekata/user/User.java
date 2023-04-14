@@ -26,4 +26,7 @@ public class User {
 		return trips;
 	}
 
+	public void setFriends(List<User> friends) {
+		this.friends = friends;
+	}
 }
